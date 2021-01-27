@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useRef } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { FiMail, FiLock, FiUser, FiCamera, FiArrowLeft } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -17,25 +17,39 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
 
+import avatarnull from '../../assets/avatar-null.jpg';
+
 interface ProfileFormData {
   name: string;
   email: string;
   old_password: string;
   password: string;
   password_confirmation: string;
+  price: string;
+  description: string;
 }
 
 const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { addToast } = useToast();
   const history = useHistory();
 
   const { user, updateUser } = useAuth();
+  const avatar = user.avatar_url ? user.avatar_url : avatarnull;
+
+  useEffect(() => {
+    if (user.is_therapist && inputRef.current) {
+      inputRef.current.checked = true;
+    }
+  }, [user.is_therapist, inputRef]);
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
       try {
         formRef.current?.setErrors({});
+
+        const is_therapist = inputRef.current?.checked;
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório.'),
@@ -55,6 +69,8 @@ const Profile: React.FC = () => {
               otherwise: Yup.string(),
             })
             .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
+          description: Yup.string(),
+          price: Yup.string(),
         });
 
         await schema.validate(data, {
@@ -64,6 +80,9 @@ const Profile: React.FC = () => {
         const formData = {
           name: data.name,
           email: data.email,
+          price: data.price || undefined,
+          is_therapist,
+          description: data.description || undefined,
           ...(data.old_password
             ? {
                 old_password: data.old_password,
@@ -141,11 +160,14 @@ const Profile: React.FC = () => {
           initialData={{
             name: user.name,
             email: user.email,
+            description: user.description || '',
+            price: user.price || '',
+            is_therapist: user.is_therapist,
           }}
           onSubmit={handleSubmit}
         >
           <AvatarInput>
-            <img src={user.avatar_url} alt={user.name} />
+            <img src={avatar} alt={user.name} />
             <label htmlFor="avatar">
               <FiCamera />
 
@@ -156,6 +178,25 @@ const Profile: React.FC = () => {
 
           <Input icon={FiUser} name="name" placeholder="Nome" />
           <Input icon={FiMail} name="email" placeholder="Email" />
+
+          <div className="is_therapist">
+            <label htmlFor="is_therapist">
+              Você é terapeuta?
+              <input
+                ref={inputRef}
+                type="checkbox"
+                name="is_therapist"
+                id="is_therapist"
+              />
+            </label>
+          </div>
+
+          {user.is_therapist && (
+            <>
+              <Input name="description" placeholder="Descrição" />
+              <Input name="price" placeholder="Preço" />
+            </>
+          )}
 
           <Input
             containerStyle={{ marginTop: 24 }}
@@ -177,6 +218,7 @@ const Profile: React.FC = () => {
             type="password"
             placeholder="Confirmar nova senha"
           />
+
           <Button type="submit">Confirmar mudanças</Button>
         </Form>
       </Content>

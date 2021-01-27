@@ -93,16 +93,18 @@ const SignUp: React.FC = () => {
               type="password"
               placeholder="Senha"
             />
-            <label htmlFor="is_therapist">
-              {' '}
-              voce é terapeuta?
-              <input
-                ref={inputRef}
-                type="checkbox"
-                name="is_therapist"
-                id="is_therapist"
-              />
-            </label>
+
+            <div className="is_therapist">
+              <label htmlFor="is_therapist">
+                Você é terapeuta?
+                <input
+                  ref={inputRef}
+                  type="checkbox"
+                  name="is_therapist"
+                  id="is_therapist"
+                />
+              </label>
+            </div>
 
             <Button type="submit">Cadastrar</Button>
           </Form>

@@ -4,7 +4,7 @@ import { shade } from 'polished';
 export const Container = styled.div`
   > header {
     height: 144px;
-    background: #28262e;
+    background: #1a3947;
     display: flex;
     align-items: center;
     div {
@@ -48,8 +48,20 @@ export const Content = styled.div`
         color: ${shade(0.2, '#f4ede8')};
       }
     }
-    input[name='old_password'] {
-      margin-top: 24px;
+  }
+
+  .is_therapist {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #232129;
+    height: 50px;
+    border-radius: 10px;
+    input {
+      margin-left: 10px;
     }
   }
 `;
@@ -62,12 +74,13 @@ export const AvatarInput = styled.div`
     width: 186px;
     height: 186px;
     border-radius: 50%;
+    object-fit: cover;
   }
   label {
     position: absolute;
     width: 48px;
     height: 48px;
-    background: #ff9000;
+    background: #ff7f39;
     border-radius: 50%;
     right: 0;
     bottom: 0;
@@ -86,7 +99,7 @@ export const AvatarInput = styled.div`
       color: #312e38;
     }
     &:hover {
-      background: ${shade(0.2, '#ff9000')};
+      background: ${shade(0.2, '#FF7F39')};
     }
   }
 `;

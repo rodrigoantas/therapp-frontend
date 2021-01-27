@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   span {
     width: 160px;
-    background: #ff9000;
+    background: #ff7f39;
     padding: 8px;
     border-radius: 4px;
     font-size: 14px;
@@ -22,7 +22,7 @@ export const Container = styled.div`
 
     &::before {
       border-style: solid;
-      border-color: #ff9000 transparent;
+      border-color: #ff7f39 transparent;
       border-width: 6px 6px 0 6px;
 
       content: '';

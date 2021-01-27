@@ -10,12 +10,17 @@ import 'react-day-picker/lib/style.css';
 
 import {
   Calendar,
-  Section,
-  SectionContent,
-  SectionTitle,
+  HourSection,
+  HourSectionContent,
+  HourSectionTitle,
   HourButton,
+  Content,
+  ContentDownside,
+  ContentUpperside,
+  CreateAppointmentButton,
+  CreateAppointmentSection,
+  Profile,
 } from './styles';
-import { useAuth } from '../../hooks/auth';
 
 import avatarnull from '../../assets/avatar-null.jpg';
 
@@ -24,7 +29,7 @@ import api from '../../services/api';
 interface RouteParams {
   therapist: {
     id: string;
-    avatar: string;
+    avatar_url: string;
     name: string;
     price: string;
     description: string;
@@ -157,87 +162,108 @@ const CreateAppointment: React.FC = () => {
     setSelectedHour(hour);
   }, []);
 
-  // console.log(morningAvailability);
-  // console.log(afternoonAvailability);
-
-  // console.log(state);
-  // console.log(availability);
   return (
     <>
       <PrincipalHeader />
-      <div>
-        <h1>{state.therapist.name}</h1>
-        <img
-          src={state.therapist.avatar ? state.therapist.avatar : avatarnull}
-          alt={state.therapist.name}
-        />
-        <p>{state.therapist.description}</p>
-        <span>{state.therapist.price}</span>
-      </div>
-      <Calendar>
-        <DayPicker
-          weekdaysShort={['D', 'S', 'T', 'q', 'Q', 'S', 'S']}
-          fromMonth={new Date()}
-          disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
-          modifiers={{
-            available: { daysOfWeek: [1, 2, 3, 4, 5] },
-          }}
-          selectedDays={selectedDate}
-          onDayClick={handleDateChange}
-          onMonthChange={handleMonthChange}
-          months={[
-            'Janeiro',
-            'Fevereiro',
-            'Março',
-            'Abril',
-            'Maio',
-            'Junho',
-            'Julho',
-            'Agosto',
-            'Setembro',
-            'Outubro',
-            'Novembro',
-            'Dezembro',
-          ]}
-        />
-      </Calendar>
+      <Content>
+        <CreateAppointmentSection>
+          <ContentUpperside>
+            <Profile>
+              <div>
+                <img
+                  src={
+                    state.therapist.avatar_url
+                      ? state.therapist.avatar_url
+                      : avatarnull
+                  }
+                  alt={state.therapist.name}
+                />
+              </div>
+              <div>
+                <h1>{state.therapist.name}</h1>
+                <p>{state.therapist.description}</p>
+                <p>
+                  Preço por hora: &nbsp;
+                  <span> RS$ {state.therapist.price}</span>
+                </p>
+              </div>
+            </Profile>
 
-      <Section>
-        <SectionTitle>Manhã</SectionTitle>
-        <SectionContent>
-          {morningAvailability.map(({ hourFormatted, hour, available }) => (
-            <HourButton
-              disabled={!available}
-              selected={selectedHour === hour}
-              available={available}
-              onClick={() => handleSelectHour(hour)}
-              key={hourFormatted}
-            >
-              {hourFormatted}
-            </HourButton>
-          ))}
-        </SectionContent>
-      </Section>
-      <Section>
-        <SectionTitle>Tarde</SectionTitle>
-        <SectionContent>
-          {afternoonAvailability.map(({ hourFormatted, hour, available }) => (
-            <HourButton
-              disabled={!available}
-              selected={selectedHour === hour}
-              available={available}
-              onClick={() => handleSelectHour(hour)}
-              key={hourFormatted}
-            >
-              {hourFormatted}
-            </HourButton>
-          ))}
-        </SectionContent>
-      </Section>
-
-      <button type="button" onClick={() => handleCreateAppointment()}>
-        criar agendamento
-      </button>
+            <Calendar>
+              <DayPicker
+                weekdaysShort={['D', 'S', 'T', 'q', 'Q', 'S', 'S']}
+                fromMonth={new Date()}
+                disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
+                modifiers={{
+                  available: { daysOfWeek: [1, 2, 3, 4, 5] },
+                }}
+                selectedDays={selectedDate}
+                onDayClick={handleDateChange}
+                onMonthChange={handleMonthChange}
+                months={[
+                  'Janeiro',
+                  'Fevereiro',
+                  'Março',
+                  'Abril',
+                  'Maio',
+                  'Junho',
+                  'Julho',
+                  'Agosto',
+                  'Setembro',
+                  'Outubro',
+                  'Novembro',
+                  'Dezembro',
+                ]}
+              />
+            </Calendar>
+          </ContentUpperside>
+          <ContentDownside>
+            <HourSection>
+              <h1>Horários</h1>
+              <HourSectionTitle>Manhã</HourSectionTitle>
+              <HourSectionContent>
+                {morningAvailability.map(
+                  ({ hourFormatted, hour, available }) => (
+                    <HourButton
+                      disabled={!available}
+                      selected={selectedHour === hour}
+                      available={available}
+                      onClick={() => handleSelectHour(hour)}
+                      key={hourFormatted}
+                    >
+                      {hourFormatted}
+                    </HourButton>
+                  ),
+                )}
+              </HourSectionContent>
+            </HourSection>
+            <HourSection>
+              <HourSectionTitle>Tarde</HourSectionTitle>
+              <HourSectionContent>
+                {afternoonAvailability.map(
+                  ({ hourFormatted, hour, available }) => (
+                    <HourButton
+                      disabled={!available}
+                      selected={selectedHour === hour}
+                      available={available}
+                      onClick={() => handleSelectHour(hour)}
+                      key={hourFormatted}
+                    >
+                      {hourFormatted}
+                    </HourButton>
+                  ),
+                )}
+              </HourSectionContent>
+            </HourSection>
+          </ContentDownside>
+          <CreateAppointmentButton
+            type="button"
+            onClick={() => handleCreateAppointment()}
+          >
+            Criar Agendamento
+          </CreateAppointmentButton>
+        </CreateAppointmentSection>
+      </Content>
     </>
   );
 };

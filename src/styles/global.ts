@@ -9,8 +9,13 @@ export default createGlobalStyle`
     text-decoration: none;
   }
 
+  html {
+    width: 100%;
+  }
+
   body {
-    background: #312e38;
+    width: 100%;
+    background: #043249;
     color: #FFF;
     -webkit-font-smoothing: antialiased;
   }
@@ -23,5 +28,13 @@ export default createGlobalStyle`
   }
   button {
     cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  textarea {
+    resize: none;
   }
 `;

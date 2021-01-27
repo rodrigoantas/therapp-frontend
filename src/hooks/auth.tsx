@@ -8,6 +8,8 @@ interface User {
   email: string;
   avatar_url: string;
   is_therapist: boolean;
+  description: string;
+  price: string;
 }
 
 interface AuthState {
@@ -31,8 +33,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@Gobarber:token');
-    const user = localStorage.getItem('@Gobarber:user');
+    const token = localStorage.getItem('@Therapp:token');
+    const user = localStorage.getItem('@Therapp:user');
 
     if (token && user) {
       api.defaults.headers.authorization = `Bearer ${token}`;
@@ -50,8 +52,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data;
 
-    localStorage.setItem('@Gobarber:token', token);
-    localStorage.setItem('@Gobarber:user', JSON.stringify(user));
+    localStorage.setItem('@Therapp:token', token);
+    localStorage.setItem('@Therapp:user', JSON.stringify(user));
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -59,15 +61,15 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@GoBarber:token');
-    localStorage.removeItem('@GoBarber:user');
+    localStorage.removeItem('@Therapp:token');
+    localStorage.removeItem('@Therapp:user');
 
     setData({} as AuthState);
   }, []);
 
   const updateUser = useCallback(
     (user: User) => {
-      localStorage.setItem('@Gobarber:user', JSON.stringify(user));
+      localStorage.setItem('@Therapp:user', JSON.stringify(user));
 
       setData({
         token: data.token,

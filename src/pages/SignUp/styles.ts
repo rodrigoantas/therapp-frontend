@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-import signUpBackgroundImg from '../../assets/sign-up-background.png';
+import signUpSvg from '../../assets/sign-up.svg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -17,6 +17,20 @@ export const Content = styled.div`
 
   width: 100%;
   max-width: 700px;
+
+  .is_therapist {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #232129;
+    height: 50px;
+    border-radius: 10px;
+    input {
+      margin-left: 10px;
+    }
+  }
 `;
 
 const appearFromRight = keyframes`
@@ -62,7 +76,7 @@ export const AnimationContainer = styled.div`
   }
 
   > a {
-    color: #ff9000;
+    color: #ff7f39;
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -73,13 +87,12 @@ export const AnimationContainer = styled.div`
       margin-right: 16px;
     }
     &:hover {
-      color: ${shade(0.2, '#ff9000')};
+      color: ${shade(0.2, '#FF7F39')};
     }
   }
 `;
 
 export const Background = styled.div`
   flex: 1;
-  background: url(${signUpBackgroundImg}) no-repeat center;
-  background-size: cover;
+  background: url(${signUpSvg}) no-repeat center;
 `;
