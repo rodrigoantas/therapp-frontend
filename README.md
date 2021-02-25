@@ -3,7 +3,7 @@
 
 
 <img src="https://i.imgur.com/WZDPI8l.png" style="height:600px; margin-bottom: 50px;">
-<img src="https://i.imgur.com/w3wEsD8.png" style="height:600px;">
+<img src="https://i.imgur.com/YYBwL24.png" style="height:600px;">
 
 ## Arquitetura
 

@@ -19,8 +19,17 @@ const PrincipalHeader: React.FC = () => {
     <Container>
       <Header>
         <HeaderContent>
-          <Link to="/">
-            <img src={logoImg} alt="GoBarber" />
+          <Link
+            to="/"
+            style={{
+              textDecoration: 'none',
+              color: '#ff7f39',
+              border: '1px solid #ff7f39',
+              borderRadius: '5px',
+              padding: '10px',
+            }}
+          >
+            <h1>Therapp</h1>
           </Link>
 
           <Profile>
