@@ -21,11 +21,11 @@ export const TherapistList = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: #f5f5f6;
+  background-color: ${shade(0.25, '#0b212b')};
 `;
 export const Therapist = styled(Link)`
   box-shadow: 2px 2px 2px 1px black;
-  border-radius: 30px;
+  border-radius: 8px;
   width: 800px;
   padding: 10px;
   background-color: #0b212b;
@@ -78,12 +78,19 @@ export const Therapist = styled(Link)`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     span {
-      padding: 10px 30px;
+      padding: 8px 10px;
       border: 1px solid white;
+      width: 50%;
       background: transparent;
-      border-radius: 10px;
+      border-radius: 5px;
       transition: 0.5s;
+      background-color: #ff7f39;
+      text-align: center;
     }
 
     span:hover {
